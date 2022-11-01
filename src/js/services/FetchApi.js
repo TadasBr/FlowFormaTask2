@@ -13,8 +13,8 @@ async function GetDataFromApiAsync(url) {
 
         return response.json();
     }
-    catch(e){
-        throw(e);
+    catch(err){
+        alert(err);
     }
 }
 
@@ -44,8 +44,8 @@ async function GetAgeDataFromApiAsync(nameArray, baseUrl)
                     }
                 });
             }   
-            catch(e){
-                throw(e)
+            catch(err){
+                alert(err);
             }
         })
     );
