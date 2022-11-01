@@ -1,3 +1,5 @@
+import {GetDataFromApiAsync, GetAgeDataFromApiAsync} from "./services/FetchApi.js"
+
 const inventorsData = GetInventorsDataAsync();
 
 inventorsData.then((values) => {
@@ -64,13 +66,12 @@ function SortTableByColumn(table, column, asc = true)
  */
 async function GetInventorsDataAsync()
 {
-    let namesData = GetDataFromApiAsync("https://tomsen.dev/FlowFormaAPI/names");
-    namesData.then((values) => {
-        console.log(namesData);
-    })
-    let techData = GetDataFromApiAsync("https://tomsen.dev/FlowFormaAPI/tech");
+    const baseUrl = "https://tomsen.dev/FlowFormaAPI/";
+
+    let namesData = GetDataFromApiAsync(`${baseUrl}names`);
+    let techData = GetDataFromApiAsync(`${baseUrl}tech`);
     let ageData = Promise.all([namesData]).then((values) => {
-        return GetAgeDataFromApiAsync(values);
+        return GetAgeDataFromApiAsync(values, baseUrl);
     });
 
     let inventorsArray = await Promise.all([namesData, techData, ageData]);
@@ -86,57 +87,6 @@ async function GetInventorsDataAsync()
     return inventorsArray;
 }
 
-/**
- * Retrieves data from single API call
- * 
- * @param {apiUrl} url url to API
- * @returns data retrieved from API
- */
-async function GetDataFromApiAsync(url) { 
-    const response = await fetch(url);
-    try {
-        const response = await fetch(url);
-
-        return response.json();
-    }
-    catch(e){
-        throw(e);
-    }
-
-
-    return data;
-}
-
-/**
- * Retrieves age data from multiple API calls
- * 
- * @param {namesArray} nameArray array of names
- * @returns array of inventors age
- */
-async function GetAgeDataFromApiAsync(nameArray) 
-{
-    const ageData = await Promise.all(nameArray[0].map(async (name) => 
-        {
-            const response = await fetch(`https://tomsen.dev/FlowFormaAPI/getdate/${name}`);
-
-            const yearInMiliseconds = 31556952000;
-
-            return await response.json().then((age) => 
-            {
-                if(age.Death != null)
-                {
-                    return Math.floor((Date.parse(age.Death) - Date.parse(age.Birth)) / yearInMiliseconds);
-                }
-                else
-                {
-                    return Math.floor((Date.now() - Date.parse(age.Birth)) / yearInMiliseconds);
-                }
-            });
-        })
-    );
-
-    return ageData;
-}
 
 /**
  * puts the data into the table
