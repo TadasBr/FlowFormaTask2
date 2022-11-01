@@ -1,13 +1,13 @@
 import { GetDataFromApiAsync, GetAgeDataFromApiAsync } from "../services/FetchApi.js"
 import { TechInventor } from "../models/TechInventor.js";
 
-export { GetInventorsDataAsync, PutInventorsDataIntoTable, SortTableByColumn }
+export { GetInventorsDataAsync, PutInventorsDataIntoTable, SortTechInventorsArrayByColumn }
 
 //import { baseApiUrl } from "../config/config"
 
 /**
  * 
- * @param  {arrays} arr n arrays
+ * @param  {type[]} arr n arrays
  * @returns zipped array
  */
 const zip = (...arr) => Array(Math.max(...arr.map(a => a.length))).fill().map((_,i) => arr.map(a => a[i])); 
@@ -39,7 +39,7 @@ async function GetInventorsDataAsync()
 /**
 * puts the data into the table
 * 
-* @param {inventorObjetArray} dataArray array of inventors object
+* @param {TechInventor[]} dataArray array of inventors object
 */
 function PutInventorsDataIntoTable(dataArray)
 {
@@ -60,39 +60,42 @@ function PutInventorsDataIntoTable(dataArray)
 }
 
 
-
 /**
-* Sorts HTML table
-* 
-* @param {HTMLTableElement} table The table to sort
-* @param {number} column Index of column to sort
-* @param {boolean} asc Determines if sorting will be in ascending order
-*/
-function SortTableByColumn(table, column, asc = true)
+ * Sorts TechInventors array by column
+ * 
+ * @param {Inventors[]} inventorsArray inventors array to sort
+ * @param {HTMLTableElement} table table header to change style and remember
+ * @param {number} column index of column to sort
+ * @param {boolean} asc Determines if sorting will be in ascending order
+ */
+function SortTechInventorsArrayByColumn(inventorsArray, table, column, asc = true)
 {
-    const dirModifier = asc ? 1 : -1;
-    const tBody = table.tBodies[0];
-    const rows = Array.from(tBody.querySelectorAll("tr"));
- 
-    //sort each row
-    const sortedRows = rows.sort((a, b) => {
-        const aColText = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
-        const bColText = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
- 
-        return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier)
-    })
- 
-    //Remove all existing Trs from the table
-    while(tBody.firstChild) 
+    switch(column)
     {
-        tBody.removeChild(tBody.firstChild);
+        case 0:
+            inventorsArray.sort((a, b) => {
+                let fa = a.name.toLowerCase();
+                let fb = b.name.toLowerCase();
+                
+                return asc? fa < fb ? -1 : 1 : fa < fb ? 1 : -1
+            })
+            break;
+        case 1:
+            inventorsArray.sort((a, b) => {
+                let fa = a.tech.toLowerCase();
+                let fb = b.tech.toLowerCase();
+        
+                return asc? fa < fb ? -1 : 1 : fa < fb ? 1 : -1
+            })
+            break;
+        default: 
+            asc ? inventorsArray.sort((a, b) => a.age - b.age) : inventorsArray.sort((a, b) => b.age - a.age);
+            break;
     }
-     
-    //Add sorted rows
-    tBody.append(...sortedRows);
- 
-    //Remember how column was sorted
+
     table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
     table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
     table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
+
+    return inventorsArray;
 }

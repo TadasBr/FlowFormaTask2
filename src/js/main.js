@@ -1,6 +1,6 @@
-import { GetInventorsDataAsync, PutInventorsDataIntoTable, SortTableByColumn } from "./utils/utils.js";
+import { GetInventorsDataAsync, PutInventorsDataIntoTable, SortTechInventorsArrayByColumn } from "./utils/utils.js";
 
-const inventorsData = GetInventorsDataAsync();
+let inventorsData = GetInventorsDataAsync();
 
 inventorsData.then((values) => {
     PutInventorsDataIntoTable(values);
@@ -11,7 +11,9 @@ inventorsData.then((values) => {
             const headerIndex = Array.prototype.indexOf.call(th.parentElement.children, th);
             const isCurrentAscending = th.classList.contains("th-sort-asc");
 
-            SortTableByColumn(tableElement, headerIndex, !isCurrentAscending);
+            inventorsData = SortTechInventorsArrayByColumn(values, tableElement, headerIndex, !isCurrentAscending);
+
+            PutInventorsDataIntoTable(inventorsData);
         })
     })
 })

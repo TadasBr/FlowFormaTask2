@@ -3,7 +3,7 @@ export { GetDataFromApiAsync, GetAgeDataFromApiAsync }
 /**
  * Retrieves data from single API call
  * 
- * @param {apiUrl} url url to API
+ * @param {string} url url to API
  * @returns data retrieved from API
  */
 async function GetDataFromApiAsync(url) { 
@@ -21,7 +21,7 @@ async function GetDataFromApiAsync(url) {
 /**
  * Retrieves age data from multiple API calls
  * 
- * @param {namesArray} nameArray array of names
+ * @param {string[]} nameArray array of names
  * @returns array of inventors age
  */
 async function GetAgeDataFromApiAsync(nameArray, baseUrl) 
