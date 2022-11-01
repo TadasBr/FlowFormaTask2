@@ -25,13 +25,13 @@ async function GetInventorsDataAsync()
         return GetAgeDataFromApiAsync(values, baseApiUrl);
     });
  
-    let inventorsArray = await Promise.all([namesData, techData, ageData]);
+    let techInventorsArray = await Promise.all([namesData, techData, ageData]);
      
-    inventorsArray = zip(inventorsArray[0], inventorsArray[1], inventorsArray[2]).map((values) => {
+    techInventorsArray = zip(techInventorsArray[0], techInventorsArray[1], techInventorsArray[2]).map((values) => {
         return new TechInventor(values[0], values[1], values[2]);
     });
      
-    return inventorsArray;
+    return techInventorsArray;
 }
 
 

@@ -7,7 +7,6 @@ export { GetDataFromApiAsync, GetAgeDataFromApiAsync }
  * @returns data retrieved from API
  */
 async function GetDataFromApiAsync(url) { 
-    const response = await fetch(url);
     try {
         const response = await fetch(url);
 
