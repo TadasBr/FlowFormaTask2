@@ -1,9 +1,8 @@
 import { GetDataFromApiAsync, GetAgeDataFromApiAsync } from "../services/FetchApi.js"
 import { TechInventor } from "../models/TechInventor.js";
+import { baseApiUrl } from "../config/config.js";
 
 export { GetInventorsDataAsync, PutInventorsDataIntoTable, SortTechInventorsArrayByColumn }
-
-//import { baseApiUrl } from "../config/config"
 
 /**
  * 
@@ -12,6 +11,7 @@ export { GetInventorsDataAsync, PutInventorsDataIntoTable, SortTechInventorsArra
  */
 const zip = (...arr) => Array(Math.max(...arr.map(a => a.length))).fill().map((_,i) => arr.map(a => a[i])); 
 
+
 /**
  * Retrieves inventors data from the apis
  * 
@@ -19,8 +19,6 @@ const zip = (...arr) => Array(Math.max(...arr.map(a => a.length))).fill().map((_
  */
 async function GetInventorsDataAsync()
 {
-    const baseApiUrl = "https://tomsen.dev/FlowFormaAPI/";
-
     let namesData = GetDataFromApiAsync(`${baseApiUrl}names`);
     let techData = GetDataFromApiAsync(`${baseApiUrl}tech`);
     let ageData = Promise.all([namesData]).then((values) => {
@@ -35,6 +33,7 @@ async function GetInventorsDataAsync()
      
     return inventorsArray;
 }
+
 
 /**
 * puts the data into the table
