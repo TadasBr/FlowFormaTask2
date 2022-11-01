@@ -1,6 +1,4 @@
-import { GetDataFromApiAsync, GetAgeDataFromApiAsync } from "./services/FetchApi.js"
-import { TechInventor } from "./models/TechInventor.js";
-import { zip } from "./utils/utils.js";
+import { GetInventorsDataAsync } from "./utils/utils.js";
 
 const inventorsData = GetInventorsDataAsync();
 
@@ -55,30 +53,6 @@ function SortTableByColumn(table, column, asc = true)
     table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
 }
 
-/**
- * Retrieves inventors data from the apis
- * 
- * @returns InventorsData
- */
-async function GetInventorsDataAsync()
-{
-    const baseUrl = "https://tomsen.dev/FlowFormaAPI/";
-
-    let namesData = GetDataFromApiAsync(`${baseUrl}names`);
-    let techData = GetDataFromApiAsync(`${baseUrl}tech`);
-    let ageData = Promise.all([namesData]).then((values) => {
-        return GetAgeDataFromApiAsync(values, baseUrl);
-    });
-
-    let inventorsArray = await Promise.all([namesData, techData, ageData]);
-    
-    inventorsArray = zip(inventorsArray[0], inventorsArray[1], inventorsArray[2]).map((values) => {
-        return new TechInventor(values[0], values[1], values[2]);
-    });
-    
-    return inventorsArray;
-}
-
 
 /**
  * puts the data into the table
@@ -87,6 +61,8 @@ async function GetInventorsDataAsync()
  */
 function PutInventorsDataIntoTable(dataArray)
 {
+    document.getElementById("table_content").innerHTML = "";
+
     let tabledata = "";
 
     dataArray.map((values) => {
