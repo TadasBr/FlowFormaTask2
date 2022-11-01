@@ -1,4 +1,6 @@
-import {GetDataFromApiAsync, GetAgeDataFromApiAsync} from "./services/FetchApi.js"
+import { GetDataFromApiAsync, GetAgeDataFromApiAsync } from "./services/FetchApi.js"
+import { TechInventor } from "./models/TechInventor.js";
+import { zip } from "./utils/utils.js";
 
 const inventorsData = GetInventorsDataAsync();
 
@@ -16,12 +18,6 @@ inventorsData.then((values) => {
     })
 })
 
-/**
- * 
- * @param  {arrays} arr n arrays
- * @returns zipped array
- */
-const zip = (...arr) => Array(Math.max(...arr.map(a => a.length))).fill().map((_,i) => arr.map(a => a[i])); 
 
 /**
  * Sorts HTML table
@@ -77,11 +73,7 @@ async function GetInventorsDataAsync()
     let inventorsArray = await Promise.all([namesData, techData, ageData]);
     
     inventorsArray = zip(inventorsArray[0], inventorsArray[1], inventorsArray[2]).map((values) => {
-        return {
-            name: values[0],
-            tech: values[1],
-            age: values[2]
-        }
+        return new TechInventor(values[0], values[1], values[2]);
     });
     
     return inventorsArray;
