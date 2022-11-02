@@ -14,6 +14,13 @@ class TechInventor{
         this.age = this.CalculateAge(age.Birth, age.Death)
     }
 
+    /**
+     * Calculates age from birth and death dates
+     * 
+     * @param {date} birth birth date
+     * @param {date} death death date
+     * @returns age
+     */
     CalculateAge(birth, death = null)
     {
         const yearInMiliseconds = 31556952000;

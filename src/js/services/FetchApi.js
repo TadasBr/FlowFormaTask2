@@ -18,10 +18,10 @@ async function GetDataFromApiAsync(url) {
 }
 
 /**
- * Retrieves age data from multiple API calls
+ * Retrieves birth and death dates data from multiple API calls
  * 
  * @param {string[]} nameArray array of names
- * @returns array of inventors age
+ * @returns array of inventors birth and death dates
  */
 async function GetAgeDataFromApiAsync(nameArray, baseUrl) 
 {
