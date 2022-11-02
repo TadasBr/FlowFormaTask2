@@ -18,19 +18,24 @@
     padding: 12px 15px;
     cursor: pointer;
 }
-.styled-table .th-sort-asc:hover::after,
+
+.styled-table .th-sort-asc:hover::after{
+    content: "\25be";
+}
+
+
+
 .styled-table th:hover::after{
     margin-left: 5px;
     content: "\25b4";
 }
 
 .styled-table .th-sort-desc:hover::after{
-    content: "\25be";
+    content: "\25b4";
 }
 
 .styled-table .th-sort-asc::after{
     content: "\25b4";
-    
 }
 
 .styled-table .th-sort-desc::after{
