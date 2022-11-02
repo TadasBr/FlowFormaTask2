@@ -30,7 +30,7 @@ async function GetInventorsDataAsync()
     techInventorsArray = zip(techInventorsArray[0], techInventorsArray[1], techInventorsArray[2]).map((values) => {
         return new TechInventor(values[0], values[1], values[2]);
     });
-     
+
     return techInventorsArray;
 }
 
