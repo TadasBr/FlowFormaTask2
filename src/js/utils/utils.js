@@ -76,7 +76,13 @@ function SortTechInventorsArrayByColumn(inventorsArray, table, column, asc = tru
                 let fa = a.name.toLowerCase();
                 let fb = b.name.toLowerCase();
                 
-                return asc? fa < fb ? -1 : 1 : fa < fb ? 1 : -1
+                return asc 
+                    ? fa < fb
+                        ? -1 
+                        : 1 
+                    : fa < fb 
+                        ? 1 
+                        : -1
             })
             break;
         case 1:
@@ -84,7 +90,13 @@ function SortTechInventorsArrayByColumn(inventorsArray, table, column, asc = tru
                 let fa = a.tech.toLowerCase();
                 let fb = b.tech.toLowerCase();
         
-                return asc? fa < fb ? -1 : 1 : fa < fb ? 1 : -1
+                return asc
+                    ? fa < fb
+                        ? -1 
+                        : 1 
+                    : fa < fb 
+                        ? 1 
+                        : -1
             })
             break;
         default: 
