@@ -100,7 +100,8 @@ function SortTechInventorsArrayByColumn(inventorsArray, table, column, asc = tru
             })
             break;
         default: 
-            asc ? inventorsArray.sort((a, b) => a.age - b.age) : inventorsArray.sort((a, b) => b.age - a.age);
+            asc ? inventorsArray.sort((a, b) => a.age - b.age) 
+                : inventorsArray.sort((a, b) => b.age - a.age);
             break;
     }
 
